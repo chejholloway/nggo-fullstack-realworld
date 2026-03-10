@@ -1,9 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
+	"os"
 
+	_ "github.com/lib/pq"
 	"github.com/rs/cors"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -18,15 +21,35 @@ import (
 	"github.com/chejholloway/conduit-backend/internal/comments"
 	"github.com/chejholloway/conduit-backend/internal/middleware"
 	"github.com/chejholloway/conduit-backend/internal/profile"
+	db "github.com/chejholloway/conduit-backend/db/sqlc"
 )
 
 func main() {
+	// Database connection
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		dbURL = "postgresql://conduit:conduit@localhost:5432/conduit?sslmode=disable"
+	}
+
+	conn, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
+	defer conn.Close()
+
+	if err := conn.Ping(); err != nil {
+		log.Fatal("Failed to ping database:", err)
+	}
+
+	queries := db.New(conn)
+
+	// Setup routes
 	mux := http.NewServeMux()
 
-	mux.Handle(articlesv1connect.NewArticleServiceHandler(&articles.Handler{}))
-	mux.Handle(authv1connect.NewAuthServiceHandler(&auth.Handler{}))
-	mux.Handle(commentsv1connect.NewCommentServiceHandler(&comments.Handler{}))
-	mux.Handle(profilev1connect.NewProfileServiceHandler(&profile.Handler{}))
+	mux.Handle(articlesv1connect.NewArticleServiceHandler(articles.NewHandler(queries)))
+	mux.Handle(authv1connect.NewAuthServiceHandler(auth.NewHandler(queries)))
+	mux.Handle(commentsv1connect.NewCommentServiceHandler(comments.NewHandler(queries)))
+	mux.Handle(profilev1connect.NewProfileServiceHandler(profile.NewHandler(queries)))
 
 	handler := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:4200"},

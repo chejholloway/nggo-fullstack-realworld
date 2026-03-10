@@ -1,1 +1,54 @@
-<p>FeatureEditor works!</p>
+<div class="editor-page">
+  <div class="container">
+    <h1 class="page-title">{{ isEdit() ? 'Edit Article' : 'New Article' }}</h1>
+
+    @if (errors().length > 0) {
+      <div class="error-messages">
+        @for (error of errors(); track error) {
+          <div class="error">{{ error }}</div>
+        }
+      </div>
+    }
+
+    <form (submit)="onSubmit(); $event.preventDefault()" class="editor-form">
+      <input
+        type="text"
+        placeholder="Article Title"
+        class="input-field title-input"
+        [value]="title()"
+        (input)="title.set($any($event.target).value)"
+        required
+      />
+
+      <input
+        type="text"
+        placeholder="What's this article about?"
+        class="input-field"
+        [value]="description()"
+        (input)="description.set($any($event.target).value)"
+        required
+      />
+
+      <textarea
+        placeholder="Write your article (in markdown)"
+        class="input-field body-input"
+        rows="12"
+        [value]="body()"
+        (input)="body.set($any($event.target).value)"
+        required
+      ></textarea>
+
+      <input
+        type="text"
+        placeholder="Enter tags (comma separated)"
+        class="input-field"
+        [value]="tags()"
+        (input)="tags.set($any($event.target).value)"
+      />
+
+      <button type="submit" class="btn-primary btn-lg" [disabled]="loading()">
+        {{ loading() ? 'Publishing...' : 'Publish Article' }}
+      </button>
+    </form>
+  </div>
+</div>

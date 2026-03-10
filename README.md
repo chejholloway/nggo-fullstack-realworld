@@ -208,19 +208,60 @@ curl.exe -X POST http://localhost:8080/articles.v1.ArticleService/ListArticles `
 
 ## Status
 
+### Infrastructure (100% Complete)
 - [x] Nx workspace scaffolded — 15 projects across 4 domains
-- [x] ConnectRPC backend running — all 4 services responding
+- [x] ConnectRPC backend running — all 4 services registered
 - [x] Proto definitions complete — all Conduit API methods covered
 - [x] Buf generation working — Go stubs + TypeScript client
 - [x] PostgreSQL schema + migrations written
 - [x] sqlc queries written for all domains
 - [x] Transport layer wired up in `shared/data-access`
 - [x] Angular routes configured
-- [x] TailwindCSS configured
-- [ ] AuthStore implementation
-- [ ] Article feed connected to backend
-- [ ] Auth (login + register) connected to backend
-- [ ] Real Tailwind UI components
-- [ ] Profile pages
-- [ ] Comments
-- [ ] Article editor
+- [x] TailwindCSS configured with `@apply` semantic classes
+- [x] Sheriff domain boundaries enforced
+
+### Frontend (85% Complete)
+- [x] AuthStore implementation (signals + localStorage + Zod validation)
+- [x] Navbar with conditional rendering (logged in/out states)
+- [x] Article feed page with tab switching (global/personal/tag)
+- [x] Login page with form validation and error handling
+- [x] Register page with form validation
+- [x] Article detail page with Medium-like typography
+- [x] Article editor (create/edit) with clean UI
+- [x] Profile page with user articles/favorites tabs
+- [x] Medium.com-like visual design (Charter font, proper spacing)
+- [x] Article preview cards with author metadata
+- [ ] Settings page
+- [ ] Comments UI component (backend ready, UI pending)
+- [ ] Loading states and skeleton screens
+- [ ] Footer content
+- [ ] Follow/unfollow functionality wired up
+
+### Backend (100% Complete)
+- [x] Server setup with HTTP/2, CORS, middleware
+- [x] Auth middleware (JWT token extraction)
+- [x] JWT generation and validation
+- [x] Password hashing (bcrypt)
+- [x] User registration logic
+- [x] User login logic
+- [x] Article CRUD operations
+- [x] Favorite/unfavorite logic
+- [x] Follow/unfollow logic
+- [x] Comments CRUD operations
+- [x] Slug generation for articles
+- [x] Authorization checks (only author can delete/update)
+
+### Critical Blockers
+1. ~~Backend handlers are empty stubs~~ ✅ COMPLETE
+2. ~~No authentication~~ ✅ COMPLETE  
+3. ~~UI polish missing~~ ✅ MOSTLY COMPLETE (Charter font, Medium-like design implemented)
+4. ~~Key pages incomplete~~ ✅ COMPLETE (Article detail, editor, profile implemented)
+
+### Remaining Work (15% - Polish & Features)
+- Comments UI component (backend complete, needs frontend)
+- Settings page for user profile editing
+- Follow/unfollow button functionality
+- Loading skeletons and animations
+- Footer content
+- Error boundary and 404 page
+- Toast notifications for user actions
