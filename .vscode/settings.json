@@ -5,6 +5,13 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
+        "node_modules": true,
+        "proto": true,
+        "scripts": true,
+        "buf.gen.yaml": true,
+        "buf.work.yaml": true,
+        "HANDOFF.md": true,
+        "nggo-fullstack-realworld-guide.md": true,
         "frontend/.angular/cache/21.1.5/conduit": true,
         "frontend/.angular": true,
         "frontend/.nx": true,
@@ -17,13 +24,7 @@
         "frontend/vitest.workspace.ts": true,
         "frontend/node_modules": true,
         "frontend/.vscode": true,
-        "node_modules": true,
-        "proto": true,
-        "scripts": true,
-        "buf.gen.yaml": true,
-        "buf.work.yaml": true,
-        "HANDOFF.md": true,
-        "nggo-fullstack-realworld-guide.md": true
+        ".husky/_": true
     },
     "hide-files.files": [
         "frontend/.angular/cache/21.1.5/conduit",
@@ -37,7 +38,8 @@
         "frontend/nx.json",
         "frontend/vitest.workspace.ts",
         "frontend/node_modules",
-        "frontend/.vscode"
+        "frontend/.vscode",
+        ".husky/_"
     ],
     "conventionalCommits.scopes": [
         "global"

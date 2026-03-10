@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, inject, ChangeDetectionStrategy } from "@angular/core";
+import { firstValueFrom } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ArticlesService } from "@conduit/articles-data-access";
@@ -58,20 +59,20 @@ export class FeatureEditor implements OnInit {
 
     try {
       const response = this.isEdit()
-        ? await this.articlesService.updateArticle(this.slug(), {
+        ? await firstValueFrom(this.articlesService.updateArticle(this.slug(), {
             title: this.title(),
             description: this.description(),
             body: this.body(),
-          })
-        : await this.articlesService.createArticle({
+          }))
+        : await firstValueFrom(this.articlesService.createArticle({
             title: this.title(),
             description: this.description(),
             body: this.body(),
             tagList,
-          });
+          }))
 
-      if (response.article) {
-        await this.router.navigate(["/article", response.article.slug]);
+      if (response && (response as any).article) {
+        await this.router.navigate(["/article", (response as any).article.slug]);
       }
     } catch (error: any) {
       this.errors.set([error.message || "Failed to save article"]);

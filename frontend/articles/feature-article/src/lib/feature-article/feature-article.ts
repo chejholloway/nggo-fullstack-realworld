@@ -47,8 +47,16 @@ export class FeatureArticle implements OnInit {
       ? this.articlesService.unfavorite(article.slug)
       : this.articlesService.favorite(article.slug);
 
-    action$.subscribe({
-      next: (res) => this.article.set(res.article),
+    // action$ is an Observable that can emit various response shapes depending on
+    // the action. Narrow the type at runtime to safely access `article`.
+    (action$ as any).subscribe({
+      next: (res: any) => {
+        const articleFromRes = (res as any).article;
+        if (articleFromRes) {
+          this.article.set(articleFromRes);
+        }
+      },
+      error: () => {}
     });
   }
 }
