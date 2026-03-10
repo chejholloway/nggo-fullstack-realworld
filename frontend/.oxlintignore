@@ -1,0 +1,12 @@
+dist
+coverage
+.nx/cache
+.nx/workspace-data
+.angular
+node_modules
+*.spec.ts
+*.config.ts
+*.config.js
+*.config.mjs
+*.html
+gen/

@@ -2,3 +2,4 @@
 *.ps1
 /scripts
 nggo-fullstack-realworld-guide.md
+frontend/LINTING_SETUP.md

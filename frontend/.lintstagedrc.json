@@ -1,0 +1,9 @@
+{
+  "*.{ts,tsx}": [
+    "oxlint --fix",
+    "eslint --fix"
+  ],
+  "*.html": [
+    "eslint --fix"
+  ]
+}
