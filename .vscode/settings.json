@@ -16,7 +16,14 @@
         "frontend/nx.json": true,
         "frontend/vitest.workspace.ts": true,
         "frontend/node_modules": true,
-        "frontend/.vscode": true
+        "frontend/.vscode": true,
+        "node_modules": true,
+        "proto": true,
+        "scripts": true,
+        "buf.gen.yaml": true,
+        "buf.work.yaml": true,
+        "HANDOFF.md": true,
+        "nggo-fullstack-realworld-guide.md": true
     },
     "hide-files.files": [
         "frontend/.angular/cache/21.1.5/conduit",

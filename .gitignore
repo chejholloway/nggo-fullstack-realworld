@@ -3,3 +3,5 @@
 /scripts
 nggo-fullstack-realworld-guide.md
 frontend/LINTING_SETUP.md
+/node_modules
+.vscode/settings.json
