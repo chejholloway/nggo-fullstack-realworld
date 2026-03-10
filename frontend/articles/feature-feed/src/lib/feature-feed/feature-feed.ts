@@ -1,6 +1,7 @@
 import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
+import { Observable } from "rxjs";
 import { ArticlesService, Article } from "@conduit/articles-data-access";
 import { AuthStore } from "@conduit/auth-data-access";
 
@@ -35,7 +36,7 @@ export class FeatureFeed implements OnInit {
 
     source$.subscribe({
       next: (res) => {
-        this.articles.set(res.articles);
+        this.articles.set(res.articles || []);
         this.loading.set(false);
       },
       error: () => this.loading.set(false),
@@ -55,17 +56,20 @@ export class FeatureFeed implements OnInit {
   }
 
   toggleFavorite(article: Article) {
-    const action$ = article.favorited
+    const action$: Observable<any> = article.favorited
       ? this.articlesService.unfavorite(article.slug)
       : this.articlesService.favorite(article.slug);
 
-    action$.subscribe((res) => {
-      if (res.article) {
-        const updated = res.article;
-        this.articles.update(prev =>
-          prev.map(a => a.slug === updated.slug ? updated : a)
-        );
-      }
+    action$.subscribe({
+      next: (res: any) => {
+        if (res.article) {
+          const updated = res.article;
+          this.articles.update(prev =>
+            prev.map(a => a.slug === updated.slug ? updated : a)
+          );
+        }
+      },
+      error: (err: any) => console.error('Failed to toggle favorite:', err),
     });
   }
 }

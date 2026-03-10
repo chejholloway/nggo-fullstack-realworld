@@ -1,0 +1,63 @@
+.auth-page {
+  @apply py-12;
+}
+
+.container {
+  @apply max-w-xl mx-auto px-4;
+}
+
+.row {
+  @apply w-full;
+}
+
+.col {
+  @apply w-full;
+}
+
+h1 {
+  @apply text-4xl font-bold mb-2;
+}
+
+p {
+  @apply mb-4;
+}
+
+p a {
+  @apply text-green-600 no-underline hover:text-green-700;
+}
+
+.error-messages {
+  @apply bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 list-none;
+}
+
+.form-group {
+  @apply mb-4;
+}
+
+.form-control {
+  @apply w-full px-4 py-2 border border-gray-300 rounded text-lg;
+}
+
+.form-control:focus {
+  @apply outline-none border-green-600;
+}
+
+.btn {
+  @apply px-6 py-3 rounded font-semibold cursor-pointer;
+}
+
+.btn-primary {
+  @apply bg-green-600 text-white hover:bg-green-700 float-right;
+}
+
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+fieldset {
+  @apply border-0 p-0;
+}
+
+fieldset:disabled {
+  @apply opacity-50;
+}

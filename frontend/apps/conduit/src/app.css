@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  /* Content paths for Tailwind to scan */
+  --content: "./apps/**/*.{html,ts}", "./articles/**/*.{html,ts}", "./auth/**/*.{html,ts}", "./profile/**/*.{html,ts}", "./shared/**/*.{html,ts}";
+}

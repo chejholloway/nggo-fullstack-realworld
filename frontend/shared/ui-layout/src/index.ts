@@ -1,1 +1,2 @@
-export * from './lib/shared-ui-layout/shared-ui-layout';
+export * from "./lib/navbar.component";
+export * from "./lib/footer.component";

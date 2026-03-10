@@ -1,0 +1,19 @@
+.footer {
+  @apply bg-gray-100 mt-auto py-6;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 flex justify-between items-center;
+}
+
+.logo-font {
+  @apply text-green-600 font-bold text-xl no-underline hover:text-green-700;
+}
+
+.attribution {
+  @apply text-gray-500 text-sm;
+}
+
+.attribution a {
+  @apply text-green-600 no-underline hover:text-green-700;
+}
