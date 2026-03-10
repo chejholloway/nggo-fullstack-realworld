@@ -1,81 +1,82 @@
 <div class="profile-page">
   @if (profile(); as profile) {
-    <div class="profile-hero">
-      <div class="container">
-        <img [src]="profile.image" [alt]="profile.username" class="profile-avatar">
-        <h1 class="profile-username">{{ profile.username }}</h1>
-        <p class="profile-bio">{{ profile.bio }}</p>
-        
-        @if (isOwnProfile()) {
-          <a routerLink="/settings" class="btn-outline">
-            <span>⚙</span> Edit Profile Settings
-          </a>
-        } @else {
-          <button class="btn-outline">
-            <span>{{ profile.following ? '−' : '+' }}</span>
-            {{ profile.following ? 'Unfollow' : 'Follow' }} {{ profile.username }}
-          </button>
-        }
-      </div>
+  <div class="profile-hero">
+    <div class="container">
+      <img [src]="profile.image" [alt]="profile.username" class="profile-avatar">
+      <h1 class="profile-username">{{ profile.username }}</h1>
+      <p class="profile-bio">{{ profile.bio }}</p>
+
+      @if (isOwnProfile()) {
+      <a routerLink="/settings" class="btn-outline">
+        <span>⚙</span> Edit Profile Settings
+      </a>
+      } @else {
+      <button class="btn-outline" (click)="toggleFollow()">
+        <span>{{ profile.following ? '−' : '+' }}</span>
+        {{ profile.following ? 'Unfollow' : 'Follow' }} {{ profile.username }}
+      </button>
+      }
     </div>
+  </div>
 
-    <div class="profile-content">
-      <div class="container">
-        <div class="feed-tabs">
-          <button 
-            class="tab-btn" 
-            [class.active]="activeTab() === 'my'"
-            (click)="setTab('my')">
-            My Articles
-          </button>
-          <button 
-            class="tab-btn" 
-            [class.active]="activeTab() === 'favorited'"
-            (click)="setTab('favorited')">
-            Favorited Articles
-          </button>
-        </div>
+  <div class="profile-content">
+    <div class="container">
+      <div class="feed-tabs">
+        <button class="tab-btn" [class.active]="activeTab() === 'my'" (click)="setTab('my')">
+          My Articles
+        </button>
+        <button class="tab-btn" [class.active]="activeTab() === 'favorited'" (click)="setTab('favorited')">
+          Favorited Articles
+        </button>
+      </div>
 
-        @if (loading()) {
-          <div class="loading">Loading articles...</div>
-        } @else if (articles().length === 0) {
-          <div class="no-articles">No articles yet.</div>
-        } @else {
-          <div class="articles-list">
-            @for (article of articles(); track article.slug) {
-              <div class="article-preview">
-                <div class="article-meta">
-                  <img [src]="article.author?.image" [alt]="article.author?.username" class="author-avatar">
-                  <div class="meta-info">
-                    <a [routerLink]="['/profile', article.author?.username]" class="author-name">
-                      {{ article.author?.username }}
-                    </a>
-                    <span class="article-date">{{ article.createdAt | date:'mediumDate' }}</span>
-                  </div>
-                  <button class="favorite-btn" [class.favorited]="article.favorited">
-                    <span class="heart">{{ article.favorited ? '♥' : '♡' }}</span>
-                    {{ article.favoritesCount }}
-                  </button>
-                </div>
-                
-                <a [routerLink]="['/article', article.slug]" class="article-link">
-                  <h2 class="article-title">{{ article.title }}</h2>
-                  <p class="article-description">{{ article.description }}</p>
-                  <span class="read-more">Read more...</span>
-                </a>
-
-                @if (article.tagList.length > 0) {
-                  <div class="article-tags">
-                    @for (tag of article.tagList; track tag) {
-                      <span class="tag">{{ tag }}</span>
-                    }
-                  </div>
-                }
-              </div>
+      @if (loading()) {
+      <div class="loading">Loading articles...</div>
+      } @else if (articles().length === 0) {
+      <div class="no-articles">No articles yet.</div>
+      } @else {
+      <div class="articles-list">
+        @for (article of articles(); track article.slug) {
+        <div class="article-preview">
+          <div class="article-meta">
+            <img [src]="article.author?.image" [alt]="article.author?.username" class="author-avatar">
+            <div class="meta-info">
+              <a [routerLink]="['/profile', article.author?.username]" class="author-name">
+                {{ article.author?.username }}
+              </a>
+              <span class="article-date">{{ article.createdAt | date:'mediumDate' }}</span>
+            </div>
+            <button class="favorite-btn" [class.favorited]="article.favorited">
+              <span class="heart">{{ article.favorited ? '♥' : '♡' }}</span>
+              {{ article.favoritesCount }}
+            </button>
+            @if (authStore.isLoggedIn() && article.author?.username !== authStore.username()) {
+            <button class="btn-outline btn-sm"
+              (click)="toggleFollowAuthor(article.author.username, article.author.following)">
+              <span>{{ article.author.following ? '−' : '+' }}</span>
+              {{ article.author.following ? 'Unfollow' : 'Follow' }}
+            </button>
             }
           </div>
+
+          <a [routerLink]="['/article', article.slug]" class="article-link">
+            <h2 class="article-title">{{ article.title }}</h2>
+            <p class="article-description">{{ article.description }}</p>
+            <span class="read-more">Read more...</span>
+          </a>
+
+          @if (article.tagList.length > 0) {
+          <div class="article-tags">
+            @for (tag of article.tagList; track tag) {
+            <span class="tag">{{ tag }}</span>
+            }
+          </div>
+          }
+        </div>
         }
       </div>
+      }
     </div>
+  </div>
   }
 </div>

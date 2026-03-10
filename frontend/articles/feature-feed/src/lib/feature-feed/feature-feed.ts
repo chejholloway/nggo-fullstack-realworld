@@ -4,6 +4,7 @@ import { RouterLink } from "@angular/router";
 import { Observable } from "rxjs";
 import { ArticlesService, Article } from "@conduit/articles-data-access";
 import { AuthStore } from "@conduit/auth-data-access";
+import { ProfileService } from "@conduit/profile-data-access";
 
 type FeedTab = "global" | "personal" | "tag";
 
@@ -17,7 +18,8 @@ type FeedTab = "global" | "personal" | "tag";
 })
 export class FeatureFeed implements OnInit {
   private articlesService = inject(ArticlesService);
-  private authStore       = inject(AuthStore);
+  public authStore       = inject(AuthStore);
+  private profileService  = inject(ProfileService);
 
   articles   = signal<Article[]>([]);
   loading    = signal(true);
@@ -71,5 +73,35 @@ export class FeatureFeed implements OnInit {
       },
       error: (err: any) => console.error('Failed to toggle favorite:', err),
     });
+  }
+
+  toggleFollowAuthor(authorUsername: string, isFollowing: boolean) {
+    if (isFollowing) {
+      this.profileService.unfollowUser(authorUsername).subscribe({
+        next: (res) => {
+          this.articles.update((articles) =>
+            articles.map((article) =>
+              article.author?.username === authorUsername
+                ? { ...article, author: res.profile }
+                : article
+            )
+          );
+        },
+        error: (err) => console.error(err),
+      });
+    } else {
+      this.profileService.followUser(authorUsername).subscribe({
+        next: (res) => {
+          this.articles.update((articles) =>
+            articles.map((article) =>
+              article.author?.username === authorUsername
+                ? { ...article, author: res.profile }
+                : article
+            )
+          );
+        },
+        error: (err) => console.error(err),
+      });
+    }
   }
 }

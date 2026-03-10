@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { ArticlesService } from "@conduit/articles-data-access";
 import { AuthStore } from "@conduit/auth-data-access";
+import { ProfileService } from "@conduit/profile-data-access";
 
 @Component({
   selector: "app-profile-feature-profile",
@@ -16,6 +17,7 @@ export class ProfileFeatureProfile implements OnInit {
   private route = inject(ActivatedRoute);
   private articlesService = inject(ArticlesService);
   protected authStore = inject(AuthStore);
+  private profileService = inject(ProfileService);
 
   profile = signal<any>(null);
   articles = signal<any[]>([]);
@@ -35,13 +37,11 @@ export class ProfileFeatureProfile implements OnInit {
   }
 
   loadProfile(username: string) {
-    // For now, we'll create a mock profile from articles
-    // In a real app, you'd call a profile service
-    this.profile.set({
-      username,
-      bio: "A passionate writer",
-      image: `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`,
-      following: false,
+    this.profileService.getProfile(username).subscribe({
+      next: (res) => {
+        this.profile.set(res.profile);
+      },
+      error: (err) => console.error(err),
     });
   }
 
@@ -60,7 +60,54 @@ export class ProfileFeatureProfile implements OnInit {
     });
   }
 
+  toggleFollow() {
+    const currentProfile = this.profile();
+    if (!currentProfile) return;
+
+    if (currentProfile.following) {
+      this.profileService.unfollowUser(currentProfile.username).subscribe({
+        next: (res) => this.profile.set(res.profile),
+        error: (err) => console.error(err),
+      });
+    } else {
+      this.profileService.followUser(currentProfile.username).subscribe({
+        next: (res) => this.profile.set(res.profile),
+        error: (err) => console.error(err),
+      });
+    }
+  }
+
   setTab(tab: "my" | "favorited") {
     this.activeTab.set(tab);
+  }
+
+  toggleFollowAuthor(authorUsername: string, isFollowing: boolean) {
+    if (isFollowing) {
+      this.profileService.unfollowUser(authorUsername).subscribe({
+        next: (res) => {
+          this.articles.update((articles) =>
+            articles.map((article) =>
+              article.author?.username === authorUsername
+                ? { ...article, author: res.profile }
+                : article
+            )
+          );
+        },
+        error: (err) => console.error(err),
+      });
+    } else {
+      this.profileService.followUser(authorUsername).subscribe({
+        next: (res) => {
+          this.articles.update((articles) =>
+            articles.map((article) =>
+              article.author?.username === authorUsername
+                ? { ...article, author: res.profile }
+                : article
+            )
+          );
+        },
+        error: (err) => console.error(err),
+      });
+    }
   }
 }

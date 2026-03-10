@@ -3,11 +3,12 @@ import { CommonModule } from "@angular/common";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { ArticlesService } from "@conduit/articles-data-access";
 import { AuthStore } from "@conduit/auth-data-access";
+import { UiCommentsComponent } from "@conduit/articles-ui-comments";
 
 @Component({
   selector: "app-feature-article",
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, UiCommentsComponent],
   templateUrl: "./feature-article.html",
   styleUrl: "./feature-article.css",
   changeDetection: ChangeDetectionStrategy.OnPush,

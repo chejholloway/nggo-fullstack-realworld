@@ -1,1 +1,2 @@
-export * from './lib/profile-data-access/profile-data-access';
+export * from "./lib/profile.service";
+export type { Profile } from "./lib/profile.service";

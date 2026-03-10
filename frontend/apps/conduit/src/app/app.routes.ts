@@ -6,5 +6,6 @@ export const appRoutes: Routes = [
   { path: 'register', loadComponent: () => import('@conduit/auth-feature-register').then(m => m.FeatureRegister) },
   { path: 'article/:slug', loadComponent: () => import('@conduit/articles-feature-article').then(m => m.FeatureArticle) },
   { path: 'editor', loadComponent: () => import('@conduit/articles-feature-editor').then(m => m.FeatureEditor) },
-  { path: 'profile/:username', loadComponent: () => import('@conduit/profile-feature-profile').then(m => m.ProfileFeatureProfile) }
+  { path: 'profile/:username', loadComponent: () => import('@conduit/profile-feature-profile').then(m => m.ProfileFeatureProfile) },
+  { path: 'settings', loadComponent: () => import('@conduit/profile-feature-settings').then(m => m.FeatureSettingsComponent) }
 ];

@@ -1,40 +1,42 @@
 <div class="article-page">
   @if (loading()) {
-    <div class="loading">Loading article...</div>
+  <div class="loading">Loading article...</div>
   } @else if (article(); as article) {
-    <div class="article-hero">
-      <div class="container">
-        <h1 class="article-title">{{ article.title }}</h1>
-        <div class="article-meta">
-          <img [src]="article.author?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + article.author?.username" 
-               [alt]="article.author?.username" 
-               class="author-avatar">
-          <div class="meta-info">
-            <a [routerLink]="['/profile', article.author?.username]" class="author-name">
-              {{ article.author?.username }}
-            </a>
-            <span class="article-date">{{ article.createdAt | date:'mediumDate' }}</span>
-          </div>
-          @if (authStore.isLoggedIn()) {
-            <button (click)="toggleFavorite()" class="btn-favorite" [class.favorited]="article.favorited">
-              <span class="heart">{{ article.favorited ? '♥' : '♡' }}</span>
-              {{ article.favoritesCount }}
-            </button>
-          }
+  <div class="article-hero">
+    <div class="container">
+      <h1 class="article-title">{{ article.title }}</h1>
+      <div class="article-meta">
+        <img
+          [src]="article.author?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + article.author?.username"
+          [alt]="article.author?.username" class="author-avatar">
+        <div class="meta-info">
+          <a [routerLink]="['/profile', article.author?.username]" class="author-name">
+            {{ article.author?.username }}
+          </a>
+          <span class="article-date">{{ article.createdAt | date:'mediumDate' }}</span>
         </div>
+        @if (authStore.isLoggedIn()) {
+        <button (click)="toggleFavorite()" class="btn-favorite" [class.favorited]="article.favorited">
+          <span class="heart">{{ article.favorited ? '♥' : '♡' }}</span>
+          {{ article.favoritesCount }}
+        </button>
+        }
       </div>
     </div>
+  </div>
 
-    <div class="article-content-wrapper">
-      <div class="container-narrow">
-        <div class="article-content" [innerHTML]="article.body"></div>
-        
-        <div class="article-tags">
-          @for (tag of article.tagList; track tag) {
-            <span class="tag">{{ tag }}</span>
-          }
-        </div>
+  <div class="article-content-wrapper">
+    <div class="container-narrow">
+      <div class="article-content" [innerHTML]="article.body"></div>
+
+      <div class="article-tags">
+        @for (tag of article.tagList; track tag) {
+        <span class="tag">{{ tag }}</span>
+        }
       </div>
+
+      <conduit-ui-comments [slug]="article.slug"></conduit-ui-comments>
     </div>
+  </div>
   }
 </div>
