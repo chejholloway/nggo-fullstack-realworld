@@ -1,0 +1,1 @@
+module.exports = { content: ["./apps/**/*.{html,ts}", "./articles/**/*.{html,ts}", "./auth/**/*.{html,ts}", "./profile/**/*.{html,ts}", "./shared/**/*.{html,ts}"], theme: { extend: {} }, plugins: [] };
