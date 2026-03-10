@@ -1,0 +1,115 @@
+.feed-page {
+  @apply min-h-screen bg-gray-50;
+}
+
+.banner {
+  @apply bg-green-600 text-white py-8 mb-8 shadow-md;
+}
+
+.banner h1 {
+  @apply text-5xl font-bold text-center tracking-tight;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.banner p {
+  @apply text-center text-green-100 text-xl mt-2;
+}
+
+.container {
+  @apply max-w-5xl mx-auto px-4;
+}
+
+.page-container {
+  @apply max-w-5xl mx-auto px-4 pb-8;
+}
+
+.feed-col {
+  @apply max-w-2xl;
+}
+
+.feed-tabs {
+  @apply flex border-b border-gray-200 mb-4;
+}
+
+.tab-btn {
+  @apply px-4 py-2 text-gray-500 hover:text-gray-700 
+         border-b-2 border-transparent cursor-pointer
+         transition-colors -mb-px;
+}
+
+.tab-btn.active {
+  @apply text-green-500 border-green-500;
+}
+
+.tag-tab {
+  @apply text-green-500;
+}
+
+.loading,
+.no-articles {
+  @apply py-8 text-gray-400 text-center;
+}
+
+.article-preview {
+  @apply border-b border-gray-200 py-6;
+}
+
+.article-meta {
+  @apply flex items-center mb-4;
+}
+
+.author-avatar {
+  @apply w-8 h-8 rounded-full mr-2 object-cover;
+}
+
+.meta-info {
+  @apply flex flex-col flex-1;
+}
+
+.author-name {
+  @apply text-green-500 font-medium hover:underline cursor-pointer;
+}
+
+.article-date {
+  @apply text-gray-400 text-xs;
+}
+
+.favorite-btn {
+  @apply ml-auto border border-green-500 text-green-500
+         px-2 py-1 rounded text-sm cursor-pointer
+         hover:bg-green-500 hover:text-white transition-colors;
+}
+
+.favorite-btn.active {
+  @apply bg-green-500 text-white;
+}
+
+.article-link {
+  @apply block cursor-pointer;
+}
+
+.article-title {
+  @apply text-2xl font-semibold text-gray-900 mb-1;
+}
+
+.article-description {
+  @apply text-gray-500 font-light mb-3;
+}
+
+.article-footer {
+  @apply flex items-center justify-between;
+}
+
+.read-more {
+  @apply text-gray-400 text-sm;
+}
+
+.tag-list {
+  @apply flex flex-wrap gap-1 list-none p-0 m-0;
+}
+
+.tag-pill {
+  @apply border border-gray-300 text-gray-400
+         text-xs px-2 py-0.5 rounded-full cursor-pointer
+         hover:bg-gray-100 transition-colors;
+}

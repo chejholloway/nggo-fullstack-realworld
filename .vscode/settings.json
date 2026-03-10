@@ -1,0 +1,38 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "frontend/.angular/cache/21.1.5/conduit": true,
+        "frontend/.angular": true,
+        "frontend/.nx": true,
+        ".vscode": true,
+        "frontend/.editorconfig": true,
+        "frontend/.prettierignore": true,
+        "frontend/.prettierrc": true,
+        "frontend/bun.lock": true,
+        "frontend/nx.json": true,
+        "frontend/vitest.workspace.ts": true,
+        "frontend/node_modules": true,
+        "frontend/.vscode": true
+    },
+    "hide-files.files": [
+        "frontend/.angular/cache/21.1.5/conduit",
+        "frontend/.angular",
+        "frontend/.nx",
+        ".vscode",
+        "frontend/.editorconfig",
+        "frontend/.prettierignore",
+        "frontend/.prettierrc",
+        "frontend/bun.lock",
+        "frontend/nx.json",
+        "frontend/vitest.workspace.ts",
+        "frontend/node_modules",
+        "frontend/.vscode"
+    ],
+    "conventionalCommits.scopes": [
+        "global"
+    ]
+}

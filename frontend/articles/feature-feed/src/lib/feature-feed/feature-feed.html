@@ -1,0 +1,68 @@
+<div class="feed-page">
+  <div class="banner">
+    <div class="container">
+      <h1>conduit</h1>
+      <p>A place to share your knowledge.</p>
+    </div>
+  </div>
+
+  <div class="page-container">
+    <div class="feed-col">
+      <div class="feed-tabs">
+        @if (isLoggedIn()) {
+          <button class="tab-btn" [class.active]="activeTab() === 'personal'" (click)="setTab('personal')">
+            Your Feed
+          </button>
+        }
+        <button class="tab-btn" [class.active]="activeTab() === 'global'" (click)="setTab('global')">
+          Global Feed
+        </button>
+        @if (activeTag()) {
+          <button class="tab-btn active tag-tab">
+            # {{ activeTag() }}
+          </button>
+        }
+      </div>
+
+      @if (loading()) {
+        <div class="loading">Loading articles...</div>
+      } @else if (articles().length === 0) {
+        <div class="no-articles">No articles are here... yet.</div>
+      } @else {
+        @for (article of articles(); track article.slug) {
+          <div class="article-preview">
+            <div class="article-meta">
+              <a [routerLink]="['/profile', article.author?.username]">
+                <img class="author-avatar"
+                     [src]="article.author?.image || 'https://api.realworld.io/images/smiley-cyrus.jpeg'"
+                     [alt]="article.author?.username" />
+              </a>
+              <div class="meta-info">
+                <a class="author-name" [routerLink]="['/profile', article.author?.username]">
+                  {{ article.author?.username }}
+                </a>
+                <span class="article-date">{{ article.createdAt }}</span>
+              </div>
+              <button class="favorite-btn" [class.active]="article.favorited" (click)="toggleFavorite(article)">
+                ♥ {{ article.favoritesCount }}
+              </button>
+            </div>
+
+            <a class="article-link" [routerLink]="['/article', article.slug]">
+              <h2 class="article-title">{{ article.title }}</h2>
+              <p class="article-description">{{ article.description }}</p>
+              <div class="article-footer">
+                <span class="read-more">Read more...</span>
+                <ul class="tag-list">
+                  @for (tag of article.tagList; track tag) {
+                    <li class="tag-pill" (click)="setTag(tag)">{{ tag }}</li>
+                  }
+                </ul>
+              </div>
+            </a>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

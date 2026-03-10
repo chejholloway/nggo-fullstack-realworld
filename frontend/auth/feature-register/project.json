@@ -1,0 +1,20 @@
+{
+  "name": "auth-feature-register",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "auth/feature-register/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/auth/feature-register"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

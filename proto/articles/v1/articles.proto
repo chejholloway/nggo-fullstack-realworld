@@ -1,0 +1,73 @@
+syntax = "proto3";
+package articles.v1;
+option go_package = "github.com/chejholloway/conduit-backend/gen/articles/v1;articlesv1";
+
+message Author {
+  string username = 1;
+  string bio = 2;
+  string image = 3;
+  bool following = 4;
+}
+
+message Article {
+  string slug = 1;
+  string title = 2;
+  string description = 3;
+  string body = 4;
+  repeated string tag_list = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  bool favorited = 8;
+  int32 favorites_count = 9;
+  Author author = 10;
+}
+
+message ListArticlesRequest {
+  string tag = 1;
+  string author = 2;
+  string favorited = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+
+message ListArticlesResponse {
+  repeated Article articles = 1;
+  int32 articles_count = 2;
+}
+
+message GetArticleRequest  { string slug = 1; }
+message GetArticleResponse { Article article = 1; }
+
+message CreateArticleRequest {
+  string title = 1;
+  string description = 2;
+  string body = 3;
+  repeated string tag_list = 4;
+}
+message CreateArticleResponse { Article article = 1; }
+
+message UpdateArticleRequest {
+  string slug = 1;
+  string title = 2;
+  string description = 3;
+  string body = 4;
+}
+message UpdateArticleResponse { Article article = 1; }
+
+message DeleteArticleRequest  { string slug = 1; }
+message DeleteArticleResponse {}
+
+message FavoriteArticleRequest   { string slug = 1; }
+message FavoriteArticleResponse  { Article article = 1; }
+message UnfavoriteArticleRequest { string slug = 1; }
+message UnfavoriteArticleResponse { Article article = 1; }
+
+service ArticleService {
+  rpc ListArticles(ListArticlesRequest)         returns (ListArticlesResponse);
+  rpc GetArticle(GetArticleRequest)             returns (GetArticleResponse);
+  rpc CreateArticle(CreateArticleRequest)       returns (CreateArticleResponse);
+  rpc UpdateArticle(UpdateArticleRequest)       returns (UpdateArticleResponse);
+  rpc DeleteArticle(DeleteArticleRequest)       returns (DeleteArticleResponse);
+  rpc FavoriteArticle(FavoriteArticleRequest)   returns (FavoriteArticleResponse);
+  rpc UnfavoriteArticle(UnfavoriteArticleRequest) returns (UnfavoriteArticleResponse);
+}

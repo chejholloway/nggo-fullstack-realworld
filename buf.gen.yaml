@@ -1,0 +1,21 @@
+# buf.gen.yaml
+version: v2
+inputs:
+  - directory: proto
+
+plugins:
+  - local: ./frontend/node_modules/.bin/protoc-gen-es.exe
+    out: frontend/libs/shared/data-access/src/gen
+    opt: target=ts
+
+  - local: ./frontend/node_modules/.bin/protoc-gen-connect-es.exe
+    out: frontend/libs/shared/data-access/src/gen
+    opt: target=ts
+
+  - local: protoc-gen-go
+    out: backend/gen
+    opt: paths=source_relative
+
+  - local: protoc-gen-connect-go
+    out: backend/gen
+    opt: paths=source_relative

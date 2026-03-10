@@ -1,0 +1,23 @@
+syntax = "proto3";
+package profile.v1;
+option go_package = "github.com/chejholloway/conduit-backend/gen/profile/v1;profilev1";
+
+message Profile {
+  string username = 1;
+  string bio = 2;
+  string image = 3;
+  bool following = 4;
+}
+
+message GetProfileRequest    { string username = 1; }
+message GetProfileResponse   { Profile profile = 1; }
+message FollowRequest        { string username = 1; }
+message FollowResponse       { Profile profile = 1; }
+message UnfollowRequest      { string username = 1; }
+message UnfollowResponse     { Profile profile = 1; }
+
+service ProfileService {
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+  rpc Follow(FollowRequest)         returns (FollowResponse);
+  rpc Unfollow(UnfollowRequest)     returns (UnfollowResponse);
+}
