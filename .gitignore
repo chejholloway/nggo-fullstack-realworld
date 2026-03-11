@@ -5,8 +5,3 @@ nggo-fullstack-realworld-guide.md
 frontend/LINTING_SETUP.md
 /node_modules
 .vscode/settings.json
-conduit-fixes.patch
-HOW-TO-APPLY.md
-conduit-cors-fix.patch
-fix-comments-service.patch
-fix-tailwind-and-api.patch

@@ -24,7 +24,11 @@
         "frontend/vitest.workspace.ts": true,
         "frontend/node_modules": true,
         "frontend/.vscode": true,
-        ".husky/_": true
+        ".husky/_": true,
+        "prepare/_": true,
+        ".husky": true,
+        "prepare": true,
+        "bun.lock": true
     },
     "hide-files.files": [
         "frontend/.angular/cache/21.1.5/conduit",
@@ -39,7 +43,11 @@
         "frontend/vitest.workspace.ts",
         "frontend/node_modules",
         "frontend/.vscode",
-        ".husky/_"
+        ".husky/_",
+        "prepare/_",
+        ".husky",
+        "prepare",
+        "bun.lock"
     ],
     "conventionalCommits.scopes": [
         "global"
