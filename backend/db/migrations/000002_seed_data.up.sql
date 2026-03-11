@@ -109,8 +109,8 @@ function useCounter(initialValue = 0) {
 
 React Hooks provide a more direct API to React concepts you already know: props, state, context, refs, and lifecycle. Start using them in your projects today!',
     (SELECT id FROM users WHERE username = 'johndoe' LIMIT 1),
-    NOW() - INTERVAL ''7 days'',
-    NOW() - INTERVAL ''7 days''
+    NOW() - INTERVAL '7 days',
+    NOW() - INTERVAL '7 days'
 ),
 (
     'building-scalable-microservices-with-nodejs',
@@ -192,8 +192,8 @@ app.listen(3001, () => {
 
 Building microservices with Node.js requires careful planning and architecture. Follow these best practices to build scalable and maintainable systems.',
     (SELECT id FROM users WHERE username = 'janesmith' LIMIT 1),
-    NOW() - INTERVAL ''6 days'',
-    NOW() - INTERVAL ''6 days''
+    NOW() - INTERVAL '6 days',
+    NOW() - INTERVAL '6 days'
 ),
 (
     'typescript-best-practices-for-2024',
@@ -343,8 +343,8 @@ function handleState<T>(state: State<T>) {
 
 Following these TypeScript best practices will help you write more maintainable and type-safe code. Keep learning and stay updated with the latest TypeScript features!',
     (SELECT id FROM users WHERE username = 'mikewilson' LIMIT 1),
-    NOW() - INTERVAL ''5 days'',
-    NOW() - INTERVAL ''5 days''
+    NOW() - INTERVAL '5 days',
+    NOW() - INTERVAL '5 days'
 ),
 (
     'optimizing-react-app-performance',
@@ -517,8 +517,8 @@ function measurePerformance(name, fn) {
 
 Optimizing React performance requires a combination of techniques. Apply these strategies based on your specific use case and measure the impact of each optimization.',
     (SELECT id FROM users WHERE username = 'sarahjones' LIMIT 1),
-    NOW() - INTERVAL ''4 days'',
-    NOW() - INTERVAL ''4 days''
+    NOW() - INTERVAL '4 days',
+    NOW() - INTERVAL '4 days'
 ),
 (
     'modern-css-techniques-every-developer-should-know',
@@ -708,8 +708,8 @@ h1, h2, h3, h4, h5, h6 {
 
 Modern CSS provides powerful tools for creating responsive, maintainable, and performant styles. Stay updated with the latest features and use them appropriately in your projects.',
     (SELECT id FROM users WHERE username = 'alexchen' LIMIT 1),
-    NOW() - INTERVAL ''3 days'',
-    NOW() - INTERVAL ''3 days''
+    NOW() - INTERVAL '3 days',
+    NOW() - INTERVAL '3 days'
 ),
 (
     'secure-authentication-strategies-for-web-apps',
@@ -900,8 +900,8 @@ app.use(helmet({
 
 Security is an ongoing process. Implement these strategies and stay updated with the latest security best practices to protect your users and application.',
     (SELECT id FROM users WHERE username = 'emilybrown' LIMIT 1),
-    NOW() - INTERVAL ''2 days'',
-    NOW() - INTERVAL ''2 days''
+    NOW() - INTERVAL '2 days',
+    NOW() - INTERVAL '2 days'
 ),
 (
     'introduction-to-machine-learning-with-python',
@@ -1081,8 +1081,8 @@ print(f"R² Score: {r2:.2f}")
 
 Machine learning with Python is accessible and powerful. Start with these fundamentals and gradually explore more advanced topics. Practice with real datasets and build projects to solidify your understanding.',
     (SELECT id FROM users WHERE username = 'davidmartinez' LIMIT 1),
-    NOW() - INTERVAL ''1 day'',
-    NOW() - INTERVAL ''1 day''
+    NOW() - INTERVAL '1 day',
+    NOW() - INTERVAL '1 day'
 ),
 (
     'docker-best-practices-for-production',
@@ -1351,8 +1351,8 @@ services:
 
 Following these Docker best practices will help you build secure, efficient, and maintainable containerized applications for production environments.',
     (SELECT id FROM users WHERE username = 'lisataylor' LIMIT 1),
-    NOW() - INTERVAL ''12 hours'',
-    NOW() - INTERVAL ''12 hours''
+    NOW() - INTERVAL '12 hours',
+    NOW() - INTERVAL '12 hours'
 ),
 (
     'building-responsive-layouts-with-css-grid',
@@ -1603,8 +1603,8 @@ Animate grid layout changes:
 
 CSS Grid provides powerful tools for creating complex, responsive layouts. Master these techniques to build modern, maintainable layouts that work across all devices.',
     (SELECT id FROM users WHERE username = 'chrislee' LIMIT 1),
-    NOW() - INTERVAL ''6 hours'',
-    NOW() - INTERVAL ''6 hours''
+    NOW() - INTERVAL '6 hours',
+    NOW() - INTERVAL '6 hours'
 ),
 (
     'web-performance-optimization-techniques',
@@ -1804,9 +1804,8 @@ penthouse({
 /* Critical CSS inlined */
 </style>
 
-<link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="styles.css"></noscript>
-```
+<link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel=''stylesheet''">
+<noscript><link rel="stylesheet" href="styles.css"></noscript>```
 
 ## Performance Monitoring
 
@@ -1870,8 +1869,8 @@ const pool = new Pool({
 
 Performance optimization is an ongoing process. Implement these techniques, measure their impact, and continuously iterate to improve your website''s performance.',
     (SELECT id FROM users WHERE username = 'rachelgreen' LIMIT 1),
-    NOW() - INTERVAL ''3 hours'',
-    NOW() - INTERVAL ''3 hours''
+    NOW() - INTERVAL '3 hours',
+    NOW() - INTERVAL '3 hours'
 );
 
 -- Insert article-tag relationships

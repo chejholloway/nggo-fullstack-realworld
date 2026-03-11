@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AuthStore } from "@conduit/auth-data-access";
 
-const API_BASE = "/conduit-api";
+const API_BASE = '/conduit-api';
 
 export interface Article {
   slug: string;
@@ -34,7 +34,7 @@ export class ArticlesService {
   }
 
   /** Global feed — GET /api/articles */
-  getFeed(offset = 0, limit = 20): Observable<ArticlesResponse> {
+  getFeed(offset = 0, limit = 50): Observable<ArticlesResponse> {
     const params = new HttpParams().set("limit", limit).set("offset", offset);
     return this.http.get<ArticlesResponse>(`${API_BASE}/articles`, {
       params,

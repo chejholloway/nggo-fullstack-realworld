@@ -58,7 +58,7 @@
       },
       "defaultConfiguration": "development",
       "options": {
-        "proxyConfig": "proxy.conf.json"
+        "proxyConfig": "proxy.local.conf.json"
       }
     },
     "lint": {
