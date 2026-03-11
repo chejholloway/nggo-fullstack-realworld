@@ -13,6 +13,10 @@ export class ArticlesService {
     return from(this.client.listArticles({ offset, limit }));
   }
 
+  getMyFeed(offset = 0, limit = 20) {
+    return from(this.client.listArticles({ offset, limit }));
+  }
+
   getByTag(tag: string, offset = 0, limit = 20) {
     return from(this.client.listArticles({ tag, offset, limit }));
   }
@@ -39,5 +43,13 @@ export class ArticlesService {
 
   unfavorite(slug: string) {
     return from(this.client.unfavoriteArticle({ slug }));
+  }
+
+  getByAuthor(author: string, offset = 0, limit = 20) {
+    return from(this.client.listArticles({ author, offset, limit }));
+  }
+
+  getFavoritedBy(favorited: string, offset = 0, limit = 20) {
+    return from(this.client.listArticles({ favorited, offset, limit }));
   }
 }

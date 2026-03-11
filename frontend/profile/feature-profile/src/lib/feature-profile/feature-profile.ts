@@ -50,7 +50,7 @@ export class ProfileFeatureProfile implements OnInit {
       : this.articlesService.getByAuthor(username);
 
     source$.subscribe({
-      next: (res) => {
+      next: (res: { articles?: any[] }) => {
         this.articles.set(res.articles ?? []);
         this.loading.set(false);
       },
