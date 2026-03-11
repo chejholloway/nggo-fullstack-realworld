@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { AuthStore } from "@conduit/auth-data-access";
 import { firstValueFrom } from "rxjs";
 
-const API_BASE = "https://api.realworld.io/api";
+const API_BASE = "/conduit-api";
 
 @Component({
   selector: "app-feature-login",

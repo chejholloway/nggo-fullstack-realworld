@@ -7,3 +7,4 @@ frontend/LINTING_SETUP.md
 .vscode/settings.json
 conduit-fixes.patch
 HOW-TO-APPLY.md
+conduit-cors-fix.patch

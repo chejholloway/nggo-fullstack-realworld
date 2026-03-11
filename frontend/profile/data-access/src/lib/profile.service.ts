@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
-const API_BASE = "https://api.realworld.io/api";
+const API_BASE = "/conduit-api";
 
 export interface Profile {
   username: string;
