@@ -1,0 +1,66 @@
+<div class="comments-section">
+  @if (isLoggedIn()) {
+    <form class="comment-form" (ngSubmit)="submitComment()">
+      <fieldset [disabled]="submitting()">
+        <textarea 
+          class="comment-input"
+          rows="3"
+          placeholder="Write a comment..."
+          [(ngModel)]="newComment"
+          name="comment"
+        ></textarea>
+        <div class="comment-footer">
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="submitting() || !newComment().trim()"
+          >
+            @if (submitting()) {
+              Posting...
+            } @else {
+              Post Comment
+            }
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  }
+
+  @if (loading()) {
+    <div class="loading">Loading comments...</div>
+  } @else if (comments().length === 0) {
+    <div class="no-comments">No comments yet. Be the first to comment!</div>
+  } @else {
+    <div class="comments-list">
+      @for (comment of comments(); track comment.id) {
+        <div class="comment-card">
+          <div class="comment-content">
+            <p>{{ comment.body }}</p>
+          </div>
+          <div class="comment-footer">
+            <a 
+              [routerLink]="['/profile', comment.author?.username]" 
+              class="comment-author-link"
+            >
+              <img 
+                class="comment-author-avatar"
+                [src]="comment.author?.image || 'https://api.realworld.io/images/smiley-cyrus.jpeg'"
+                [alt]="comment.author?.username"
+              />
+              {{ comment.author?.username }}
+            </a>
+            <span class="comment-date">{{ comment.createdAt }}</span>
+            @if (canDeleteComment(comment)) {
+              <button 
+                class="delete-comment-btn"
+                (click)="deleteComment(comment.id)"
+              >
+                Delete
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

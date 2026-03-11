@@ -1,0 +1,5 @@
+/* Navbar component specific styles - empty as global styles handle everything */
+
+.user-pic {
+  @apply w-6 h-6 rounded-full mr-2;
+}

@@ -1,0 +1,43 @@
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">conduit</a>
+    
+    <ul class="nav">
+      @if (isLoggedIn()) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/editor">
+            <i class="ion-compose"></i>&nbsp;New Article
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/settings">
+            <i class="ion-gear-a"></i>&nbsp;Settings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile/{{ user()?.username }}">
+            <img 
+              class="user-pic" 
+              [src]="user()?.image || 'https://api.realworld.io/images/smiley-cyrus.jpeg'"
+              [alt]="user()?.username"
+            />
+            {{ user()?.username }}
+          </a>
+        </li>
+      } @else {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Sign in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Sign up</a>
+        </li>
+      }
+    </ul>
+  </div>
+</nav>
