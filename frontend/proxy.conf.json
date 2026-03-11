@@ -1,6 +1,6 @@
 {
   "/conduit-api": {
-    "target": "https://api.realworld.io",
+    "target": "https://api.realworld.show",
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": {
