@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .navbar {
   @apply bg-white border-b border-gray-200;
 }

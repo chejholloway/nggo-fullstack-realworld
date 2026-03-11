@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .article-page {
   @apply min-h-screen bg-white;
 }

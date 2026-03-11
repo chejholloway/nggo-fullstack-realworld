@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .comments-section {
   @apply mt-10;
 }

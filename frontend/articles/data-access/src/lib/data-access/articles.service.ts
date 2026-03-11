@@ -1,17 +1,8 @@
 import { inject, Injectable } from "@angular/core";
-import { from, Observable } from "rxjs";
-import { createClient } from "@connectrpc/connect";
-import { ArticleService } from "@conduit/gen/articles";
-import { CONNECT_TRANSPORT } from "@conduit/shared-data-access";
-import type { 
-  ListArticlesResponse, 
-  GetArticleResponse, 
-  CreateArticleResponse, 
-  UpdateArticleResponse, 
-  DeleteArticleResponse,
-  FavoriteArticleResponse,
-  UnfavoriteArticleResponse
-} from "@conduit/gen/articles";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+
+const API_BASE = "https://api.realworld.io/api";
 
 export interface Article {
   slug: string;
@@ -26,44 +17,59 @@ export interface Article {
   author?: { username: string; bio: string; image: string; following: boolean };
 }
 
+interface ArticlesResponse {
+  articles: Article[];
+  articlesCount: number;
+}
+
+interface ArticleResponse {
+  article: Article;
+}
+
 @Injectable({ providedIn: "root" })
 export class ArticlesService {
-  private readonly transport = inject(CONNECT_TRANSPORT);
-  private readonly client = createClient(ArticleService, this.transport);
+  private http = inject(HttpClient);
 
-  getFeed(offset = 0, limit = 20): Observable<ListArticlesResponse> {
-    return from(
-      this.client.listArticles({ offset, limit, tag: "", author: "", favorited: "" })
-    );
+  getFeed(offset = 0, limit = 20): Observable<ArticlesResponse> {
+    const params = new HttpParams()
+      .set("limit", limit)
+      .set("offset", offset);
+    return this.http.get<ArticlesResponse>(`${API_BASE}/articles`, { params });
   }
 
-  getByTag(tag: string, offset = 0, limit = 20): Observable<ListArticlesResponse> {
-    return from(
-      this.client.listArticles({ offset, limit, tag, author: "", favorited: "" })
-    );
+  getByTag(tag: string, offset = 0, limit = 20): Observable<ArticlesResponse> {
+    const params = new HttpParams()
+      .set("tag", tag)
+      .set("limit", limit)
+      .set("offset", offset);
+    return this.http.get<ArticlesResponse>(`${API_BASE}/articles`, { params });
   }
 
-  getArticle(slug: string): Observable<GetArticleResponse> {
-    return from(this.client.getArticle({ slug }));
+  getArticle(slug: string): Observable<ArticleResponse> {
+    return this.http.get<ArticleResponse>(`${API_BASE}/articles/${slug}`);
   }
 
-  createArticle(data: { title: string; description: string; body: string; tagList: string[] }): Observable<CreateArticleResponse> {
-    return from(this.client.createArticle(data));
+  createArticle(data: { title: string; description: string; body: string; tagList: string[] }): Observable<ArticleResponse> {
+    return this.http.post<ArticleResponse>(`${API_BASE}/articles`, { article: data });
   }
 
-  updateArticle(slug: string, data: { title?: string; description?: string; body?: string }): Observable<UpdateArticleResponse> {
-    return from(this.client.updateArticle({ slug, ...data }));
+  updateArticle(slug: string, data: { title?: string; description?: string; body?: string }): Observable<ArticleResponse> {
+    return this.http.put<ArticleResponse>(`${API_BASE}/articles/${slug}`, { article: data });
   }
 
-  deleteArticle(slug: string): Observable<DeleteArticleResponse> {
-    return from(this.client.deleteArticle({ slug }));
+  deleteArticle(slug: string): Observable<void> {
+    return this.http.delete<void>(`${API_BASE}/articles/${slug}`);
   }
 
-  favorite(slug: string): Observable<FavoriteArticleResponse> {
-    return from(this.client.favoriteArticle({ slug }));
+  favorite(slug: string): Observable<ArticleResponse> {
+    return this.http.post<ArticleResponse>(`${API_BASE}/articles/${slug}/favorite`, {});
   }
 
-  unfavorite(slug: string): Observable<UnfavoriteArticleResponse> {
-    return from(this.client.unfavoriteArticle({ slug }));
+  unfavorite(slug: string): Observable<ArticleResponse> {
+    return this.http.delete<ArticleResponse>(`${API_BASE}/articles/${slug}/favorite`);
+  }
+
+  getTags(): Observable<{ tags: string[] }> {
+    return this.http.get<{ tags: string[] }>(`${API_BASE}/tags`);
   }
 }

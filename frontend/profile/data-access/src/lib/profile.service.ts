@@ -1,16 +1,8 @@
 import { inject, Injectable } from "@angular/core";
-import { from, Observable } from "rxjs";
-import { createClient } from "@connectrpc/connect";
-import { ProfileService as ConnectProfileService } from "@conduit/gen/profile";
-import { CONNECT_TRANSPORT } from "@conduit/shared-data-access";
-import type {
-  GetProfileRequest,
-  GetProfileResponse,
-  FollowRequest,
-  FollowResponse,
-  UnfollowRequest,
-  UnfollowResponse,
-} from "@conduit/gen/profile";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+
+const API_BASE = "https://api.realworld.io/api";
 
 export interface Profile {
   username: string;
@@ -19,20 +11,28 @@ export interface Profile {
   following: boolean;
 }
 
+interface ProfileResponse {
+  profile: Profile;
+}
+
 @Injectable({ providedIn: "root" })
 export class ProfileService {
-  private transport = inject(CONNECT_TRANSPORT);
-  private client = createClient(ConnectProfileService, this.transport);
+  private http = inject(HttpClient);
 
-  getProfile(username: string): Observable<GetProfileResponse> {
-    return from(this.client.getProfile({ username }));
+  getProfile(username: string): Observable<ProfileResponse> {
+    return this.http.get<ProfileResponse>(`${API_BASE}/profiles/${username}`);
   }
 
-  followUser(username: string): Observable<FollowResponse> {
-    return from(this.client.follow({ username }));
+  followUser(username: string): Observable<ProfileResponse> {
+    return this.http.post<ProfileResponse>(
+      `${API_BASE}/profiles/${username}/follow`,
+      {}
+    );
   }
 
-  unfollowUser(username: string): Observable<UnfollowResponse> {
-    return from(this.client.unfollow({ username }));
+  unfollowUser(username: string): Observable<ProfileResponse> {
+    return this.http.delete<ProfileResponse>(
+      `${API_BASE}/profiles/${username}/follow`
+    );
   }
 }

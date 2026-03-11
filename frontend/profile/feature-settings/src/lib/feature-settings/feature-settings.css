@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .settings-page {
   @apply pt-8 pb-16;
 }

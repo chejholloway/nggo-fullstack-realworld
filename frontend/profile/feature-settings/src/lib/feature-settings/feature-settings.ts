@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthStore } from '@conduit/auth-data-access';
-import { User, UpdateUserRequest } from '@conduit/gen/auth';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { createClient } from "@connectrpc/connect";
-import { AuthService } from "@conduit/gen/auth";
-import { CONNECT_TRANSPORT } from "@conduit/shared-data-access";
-import { from, Observable } from "rxjs";
+import { AuthStore } from '@conduit/auth-data-access';
+import { firstValueFrom } from 'rxjs';
+
+const API_BASE = "https://api.realworld.io/api";
 
 @Component({
   selector: 'conduit-feature-settings',
@@ -19,17 +18,18 @@ import { from, Observable } from "rxjs";
 })
 export class FeatureSettingsComponent implements OnInit {
   private authStore = inject(AuthStore);
-  private router = inject(Router);
-  private transport = inject(CONNECT_TRANSPORT);
-  private client = createClient(AuthService, this.transport);
+  private router    = inject(Router);
+  private http      = inject(HttpClient);
 
   user = this.authStore.user;
 
-  image = signal('');
+  image    = signal('');
   username = signal('');
-  bio = signal('');
-  email = signal('');
+  bio      = signal('');
+  email    = signal('');
   password = signal('');
+  errors   = signal<string[]>([]);
+  loading  = signal(false);
 
   ngOnInit() {
     const currentUser = this.user();
@@ -41,25 +41,40 @@ export class FeatureSettingsComponent implements OnInit {
     }
   }
 
-  updateSettings() {
-    const request = {
-      email: this.email(),
+  async updateSettings() {
+    this.errors.set([]);
+    this.loading.set(true);
+    const payload: any = {
+      email:    this.email(),
       username: this.username(),
-      bio: this.bio(),
-      image: this.image(),
-    } as UpdateUserRequest;
+      bio:      this.bio(),
+      image:    this.image(),
+    };
+    if (this.password()) payload.password = this.password();
 
-    if (this.password()) {
-      request.password = this.password();
+    try {
+      const token = this.authStore.token();
+      const response: any = await firstValueFrom(
+        this.http.put(`${API_BASE}/user`, { user: payload }, {
+          headers: token ? { Authorization: `Token ${token}` } : {},
+        })
+      );
+      if (response?.user) {
+        this.authStore.setUser(response.user);
+        this.router.navigate(['/profile', response.user.username]);
+      }
+    } catch (error: any) {
+      const body = error?.error;
+      const msgs: string[] = [];
+      if (body?.errors) {
+        for (const [field, errs] of Object.entries(body.errors)) {
+          for (const msg of errs as string[]) msgs.push(`${field} ${msg}`);
+        }
+      }
+      this.errors.set(msgs.length ? msgs : ['Update failed.']);
+    } finally {
+      this.loading.set(false);
     }
-
-    from(this.client.updateUser(request)).subscribe({
-      next: (res) => {
-        this.authStore.setUser(res.user);
-        this.router.navigate(['/profile', res.user?.username]);
-      },
-      error: (err) => console.error(err),
-    });
   }
 
   logout() {
@@ -67,4 +82,3 @@ export class FeatureSettingsComponent implements OnInit {
     this.router.navigate(['/']);
   }
 }
-
