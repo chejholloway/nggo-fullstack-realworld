@@ -25,7 +25,6 @@ import (
 )
 
 func main() {
-	// Database connection
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
 		dbURL = "postgresql://conduit:conduit@localhost:5432/conduit?sslmode=disable"
@@ -43,9 +42,7 @@ func main() {
 
 	queries := db.New(conn)
 
-	// Setup routes
 	mux := http.NewServeMux()
-
 	mux.Handle(articlesv1connect.NewArticleServiceHandler(articles.NewHandler(queries)))
 	mux.Handle(authv1connect.NewAuthServiceHandler(auth.NewHandler(queries)))
 	mux.Handle(commentsv1connect.NewCommentServiceHandler(comments.NewHandler(queries)))
@@ -53,8 +50,17 @@ func main() {
 
 	handler := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:4200"},
-		AllowedMethods: []string{"GET", "POST", "OPTIONS"},
-		AllowedHeaders: []string{"Connect-Protocol-Version", "Content-Type", "Authorization"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{
+			"Connect-Protocol-Version",
+			"Content-Type",
+			"Authorization",
+		},
+		ExposedHeaders: []string{
+			"Grpc-Status",
+			"Grpc-Message",
+			"Connect-Content-Encoding",
+		},
 	}).Handler(middleware.Auth(mux))
 
 	log.Println("Backend running on :8080")
