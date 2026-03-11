@@ -1,58 +1,54 @@
 <div class="auth-page">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <h1 class="text-center">Sign up</h1>
-        <p class="text-center">
-          <a routerLink="/login">Have an account?</a>
-        </p>
+  <div class="container-narrow">
+    <h1>Sign up</h1>
+    <p>
+      <a routerLink="/login">Have an account?</a>
+    </p>
 
-        @if (errors().length > 0) {
-          <ul class="error-messages">
-            @for (error of errors(); track error) {
-              <li>{{ error }}</li>
-            }
-          </ul>
+    @if (errors().length > 0) {
+      <ul class="error-messages">
+        @for (error of errors(); track error) {
+          <li>{{ error }}</li>
         }
+      </ul>
+    }
 
-        <form (submit)="onSubmit(); $event.preventDefault()">
-          <fieldset [disabled]="loading()">
-            <fieldset class="form-group">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Username"
-                [value]="username()"
-                (input)="username.set($any($event.target).value)"
-                required
-              />
-            </fieldset>
-            <fieldset class="form-group">
-              <input
-                class="form-control"
-                type="email"
-                placeholder="Email"
-                [value]="email()"
-                (input)="email.set($any($event.target).value)"
-                required
-              />
-            </fieldset>
-            <fieldset class="form-group">
-              <input
-                class="form-control"
-                type="password"
-                placeholder="Password"
-                [value]="password()"
-                (input)="password.set($any($event.target).value)"
-                required
-              />
-            </fieldset>
-            <button class="btn btn-primary" type="submit">
-              Sign up
-            </button>
-          </fieldset>
-        </form>
-      </div>
-    </div>
+    <form (submit)="onSubmit(); $event.preventDefault()">
+      <fieldset [disabled]="loading()">
+        <fieldset class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Username"
+            [value]="username()"
+            (input)="username.set($any($event.target).value)"
+            required
+          />
+        </fieldset>
+        <fieldset class="form-group">
+          <input
+            class="form-control"
+            type="email"
+            placeholder="Email"
+            [value]="email()"
+            (input)="email.set($any($event.target).value)"
+            required
+          />
+        </fieldset>
+        <fieldset class="form-group">
+          <input
+            class="form-control"
+            type="password"
+            placeholder="Password"
+            [value]="password()"
+            (input)="password.set($any($event.target).value)"
+            required
+          />
+        </fieldset>
+        <button class="btn btn-primary" type="submit">
+          Sign up
+        </button>
+      </fieldset>
+    </form>
   </div>
 </div>

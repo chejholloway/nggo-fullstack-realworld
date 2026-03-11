@@ -3,7 +3,7 @@
   <div class="loading">Loading article...</div>
   } @else if (article(); as article) {
   <div class="article-hero">
-    <div class="container">
+    <div class="container-article">
       <h1 class="article-title">{{ article.title }}</h1>
       <div class="article-meta">
         <img
@@ -26,7 +26,7 @@
   </div>
 
   <div class="article-content-wrapper">
-    <div class="container-narrow">
+    <div class="container-article">
       <div class="article-content" [innerHTML]="article.body"></div>
 
       <div class="article-tags">

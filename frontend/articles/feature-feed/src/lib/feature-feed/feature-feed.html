@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <div class="page-container">
+  <div class="page-container container">
     <div class="feed-col">
       <div class="feed-tabs">
         @if (isLoggedIn()) {
@@ -53,8 +53,13 @@
                 <span class="read-more">Read more...</span>
                 <ul class="tag-list">
                   @for (tag of article.tagList; track tag) {
-                    <li class="tag-pill" (click)="setTag(tag); $event.stopPropagation()">{{ tag }}</li>
-                  }
+                    <li 
+                        class="tag-pill" 
+                        (click)="setTag(tag); $event.stopPropagation()" 
+                        (keyup)="setTag(tag); $event.stopPropagation()" 
+                        tabindex="0">
+                        {{ tag }}
+                    </li>                  }
                 </ul>
               </div>
             </a>
