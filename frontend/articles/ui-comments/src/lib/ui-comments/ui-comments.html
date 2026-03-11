@@ -1,44 +1,52 @@
 <div class="comments-section">
-    <div class="container-narrow">
-        @if (authStore.isLoggedIn()) {
-        <form class="comment-form" (ngSubmit)="addComment()">
-            <textarea class="comment-input" placeholder="Write a comment..." [(ngModel)]="commentBody"
-                name="commentBody"></textarea>
-            <div class="comment-footer">
-                <img [src]="authStore.user()?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + authStore.user()?.username"
-                    [alt]="authStore.user()?.username" class="comment-author-avatar">
-                <button type="submit" class="btn btn-primary">Post Comment</button>
-            </div>
-        </form>
-        }
+  <div class="container-narrow">
 
-        @if (loading()) {
-        <div class="loading">Loading comments...</div>
-        } @else if (comments().length > 0) {
-        <div class="comments-list">
-            @for (comment of comments(); track comment.id) {
-            <div class="comment-card">
-                <div class="comment-content">
-                    {{ comment.body }}
-                </div>
-                <div class="comment-footer">
-                    <a [routerLink]="['/profile', comment.author?.username]" class="comment-author-link">
-                        <img [src]="comment.author?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + comment.author?.username"
-                            [alt]="comment.author?.username" class="comment-author-avatar">
-                        {{ comment.author?.username }}
-                    </a>
-                    <span class="comment-date">{{ comment.createdAt | date:'mediumDate' }}</span>
-                    @if (authStore.user()?.username === comment.author?.username) {
-                    <button class="delete-comment-btn" (click)="deleteComment(comment.id)">
-                        <i class="ion-trash-a"></i>
-                    </button>
-                    }
-                </div>
-            </div>
-            }
+    @if (authStore.isLoggedIn()) {
+      <div class="comment-form">
+        <textarea
+          class="comment-input"
+          placeholder="Write a comment..."
+          [value]="commentBody()"
+          (input)="onCommentInput($event)"
+        ></textarea>
+        <div class="comment-footer">
+          <img
+            [src]="authStore.user()?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + authStore.user()?.username"
+            [alt]="authStore.user()?.username"
+            class="comment-author-avatar"
+          />
+          <button class="btn-primary" (click)="addComment()">Post Comment</button>
         </div>
-        } @else {
-        <div class="no-comments">No comments yet.</div>
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="loading">Loading comments...</div>
+    } @else if (comments().length > 0) {
+      <div class="comments-list">
+        @for (comment of comments(); track comment.id) {
+          <div class="comment-card">
+            <div class="comment-content">{{ comment.body }}</div>
+            <div class="comment-footer">
+              <a [routerLink]="['/profile', comment.author?.username]" class="comment-author-link">
+                <img
+                  [src]="comment.author?.image || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + comment.author?.username"
+                  [alt]="comment.author?.username"
+                  class="comment-author-avatar"
+                />
+                {{ comment.author?.username }}
+              </a>
+              <span class="comment-date">{{ comment.createdAt | date:'mediumDate' }}</span>
+              @if (authStore.user()?.username === comment.author?.username) {
+                <button class="delete-comment-btn" (click)="deleteComment(comment.id)">✕</button>
+              }
+            </div>
+          </div>
         }
-    </div>
+      </div>
+    } @else {
+      <div class="no-comments">No comments yet.</div>
+    }
+
+  </div>
 </div>

@@ -18,7 +18,7 @@ type FeedTab = "global" | "personal" | "tag";
 })
 export class FeatureFeed implements OnInit {
   private articlesService = inject(ArticlesService);
-  public authStore       = inject(AuthStore);
+  public  authStore       = inject(AuthStore);
   private profileService  = inject(ProfileService);
 
   articles   = signal<Article[]>([]);
@@ -32,13 +32,20 @@ export class FeatureFeed implements OnInit {
   loadArticles() {
     this.loading.set(true);
     const tag = this.activeTag();
-    const source$ = tag
-      ? this.articlesService.getByTag(tag)
-      : this.articlesService.getFeed();
+    const tab = this.activeTab();
+
+    let source$: Observable<any>;
+    if (tag) {
+      source$ = this.articlesService.getByTag(tag);
+    } else if (tab === "personal" && this.isLoggedIn()) {
+      source$ = this.articlesService.getMyFeed();
+    } else {
+      source$ = this.articlesService.getFeed();
+    }
 
     source$.subscribe({
-      next: (res) => {
-        this.articles.set(res.articles || []);
+      next: (res: any) => {
+        this.articles.set(res.articles ?? []);
         this.loading.set(false);
       },
       error: () => this.loading.set(false),
@@ -64,44 +71,32 @@ export class FeatureFeed implements OnInit {
 
     action$.subscribe({
       next: (res: any) => {
-        if (res.article) {
-          const updated = res.article;
+        if (res?.article) {
           this.articles.update(prev =>
-            prev.map(a => a.slug === updated.slug ? updated : a)
+            prev.map(a => a.slug === res.article.slug ? res.article : a)
           );
         }
       },
-      error: (err: any) => console.error('Failed to toggle favorite:', err),
+      error: (err: any) => console.error("Failed to toggle favorite:", err),
     });
   }
 
   toggleFollowAuthor(authorUsername: string, isFollowing: boolean) {
-    if (isFollowing) {
-      this.profileService.unfollowUser(authorUsername).subscribe({
-        next: (res) => {
-          this.articles.update((articles) =>
-            articles.map((article) =>
-              article.author?.username === authorUsername
-                ? { ...article, author: res.profile }
-                : article
-            )
-          );
-        },
-        error: (err) => console.error(err),
-      });
-    } else {
-      this.profileService.followUser(authorUsername).subscribe({
-        next: (res) => {
-          this.articles.update((articles) =>
-            articles.map((article) =>
-              article.author?.username === authorUsername
-                ? { ...article, author: res.profile }
-                : article
-            )
-          );
-        },
-        error: (err) => console.error(err),
-      });
-    }
+    const action$ = isFollowing
+      ? this.profileService.unfollowUser(authorUsername)
+      : this.profileService.followUser(authorUsername);
+
+    action$.subscribe({
+      next: (res: any) => {
+        this.articles.update(articles =>
+          articles.map(a =>
+            a.author?.username === authorUsername
+              ? { ...a, author: res.profile }
+              : a
+          )
+        );
+      },
+      error: (err: any) => console.error(err),
+    });
   }
 }

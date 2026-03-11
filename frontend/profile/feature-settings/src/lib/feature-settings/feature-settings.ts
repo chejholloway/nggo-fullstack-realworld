@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthStore } from '@conduit/auth-data-access';
 import { firstValueFrom } from 'rxjs';
@@ -11,7 +10,7 @@ const API_BASE = "/conduit-api";
 @Component({
   selector: 'conduit-feature-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './feature-settings.html',
   styleUrl: './feature-settings.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,8 +19,6 @@ export class FeatureSettingsComponent implements OnInit {
   private authStore = inject(AuthStore);
   private router    = inject(Router);
   private http      = inject(HttpClient);
-
-  user = this.authStore.user;
 
   image    = signal('');
   username = signal('');
@@ -32,13 +29,17 @@ export class FeatureSettingsComponent implements OnInit {
   loading  = signal(false);
 
   ngOnInit() {
-    const currentUser = this.user();
-    if (currentUser) {
-      this.image.set(currentUser.image || '');
-      this.username.set(currentUser.username || '');
-      this.bio.set(currentUser.bio || '');
-      this.email.set(currentUser.email || '');
+    const u = this.authStore.user();
+    if (u) {
+      this.image.set(u.image || '');
+      this.username.set(u.username || '');
+      this.bio.set(u.bio || '');
+      this.email.set(u.email || '');
     }
+  }
+
+  set(field: 'image' | 'username' | 'bio' | 'email' | 'password', event: Event) {
+    this[field].set((event.target as HTMLInputElement | HTMLTextAreaElement).value);
   }
 
   async updateSettings() {
@@ -54,10 +55,9 @@ export class FeatureSettingsComponent implements OnInit {
 
     try {
       const token = this.authStore.token();
+      const headers = token ? new HttpHeaders({ Authorization: `Token ${token}` }) : new HttpHeaders();
       const response: any = await firstValueFrom(
-        this.http.put(`${API_BASE}/user`, { user: payload }, {
-          headers: token ? { Authorization: `Token ${token}` } : {},
-        })
+        this.http.put(`${API_BASE}/user`, { user: payload }, { headers })
       );
       if (response?.user) {
         this.authStore.setUser(response.user);

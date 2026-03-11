@@ -1,36 +1,47 @@
 <div class="settings-page">
-  <div class="container page">
-    <div class="row">
-      <div class="col-md-6 offset-md-3 col-xs-12">
-        <h1 class="text-xs-center">Your Settings</h1>
+  <div class="container">
+    <h1>Your Settings</h1>
 
-        <form (ngSubmit)="updateSettings()">
-          <fieldset>
-            <fieldset class="form-group">
-              <input class="form-control" type="text" placeholder="URL of profile picture" [(ngModel)]="image" name="image">
-            </fieldset>
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="text" placeholder="Your Name" [(ngModel)]="username" name="username">
-            </fieldset>
-            <fieldset class="form-group">
-              <textarea class="form-control form-control-lg" rows="8" placeholder="Short bio about you" [(ngModel)]="bio" name="bio"></textarea>
-            </fieldset>
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="text" placeholder="Email" [(ngModel)]="email" name="email">
-            </fieldset>
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="password" placeholder="New Password" [(ngModel)]="password" name="password">
-            </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
-              Update Settings
-            </button>
-          </fieldset>
-        </form>
-        <hr>
-        <button class="btn btn-outline-danger" (click)="logout()">
-          Or click here to logout.
+    @if (errors().length > 0) {
+      <ul class="error-messages">
+        @for (error of errors(); track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    }
+
+    <form (submit)="updateSettings(); $event.preventDefault()">
+      <fieldset [attr.disabled]="loading() ? true : null">
+        <fieldset class="form-group">
+          <input class="form-control" type="text" placeholder="URL of profile picture"
+            [value]="image()" (input)="set('image', $event)" />
+        </fieldset>
+        <fieldset class="form-group">
+          <input class="form-control form-control-lg" type="text" placeholder="Your Name"
+            [value]="username()" (input)="set('username', $event)" />
+        </fieldset>
+        <fieldset class="form-group">
+          <textarea class="form-control form-control-lg" rows="8" placeholder="Short bio about you"
+            [value]="bio()" (input)="set('bio', $event)"></textarea>
+        </fieldset>
+        <fieldset class="form-group">
+          <input class="form-control form-control-lg" type="email" placeholder="Email"
+            [value]="email()" (input)="set('email', $event)" />
+        </fieldset>
+        <fieldset class="form-group">
+          <input class="form-control form-control-lg" type="password" placeholder="New Password"
+            [value]="password()" (input)="set('password', $event)" />
+        </fieldset>
+        <button type="submit" class="btn btn-primary pull-xs-right">
+          Update Settings
         </button>
-      </div>
-    </div>
+      </fieldset>
+    </form>
+
+    <hr />
+
+    <button class="btn btn-outline-danger" (click)="logout()">
+      Or click here to logout.
+    </button>
   </div>
 </div>
