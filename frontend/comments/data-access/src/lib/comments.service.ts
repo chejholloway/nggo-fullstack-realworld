@@ -1,34 +1,57 @@
 import { inject, Injectable } from "@angular/core";
-import { from, Observable } from "rxjs";
-import { createClient } from "@connectrpc/connect";
-import { CommentService as ConnectCommentService } from "@conduit/gen/comments";
-import { CONNECT_TRANSPORT } from "@conduit/shared-data-access";
-import {
-  GetCommentsRequest,
-  GetCommentsRequestSchema,
-  GetCommentsResponse,
-  AddCommentRequest,
-  AddCommentRequestSchema,
-  AddCommentResponse,
-  DeleteCommentRequest,
-  DeleteCommentRequestSchema,
-  DeleteCommentResponse,
-} from "@conduit/gen/comments";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { AuthStore } from "@conduit/auth-data-access";
+
+const API_BASE = "/conduit-api";
+
+export interface Comment {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  body: string;
+  author: {
+    username: string;
+    bio: string;
+    image: string;
+    following: boolean;
+  };
+}
+
+interface CommentsResponse { comments: Comment[]; }
+interface CommentResponse  { comment: Comment; }
 
 @Injectable({ providedIn: "root" })
 export class CommentsService {
-  private transport = inject(CONNECT_TRANSPORT);
-  private client = createClient(ConnectCommentService, this.transport);
+  private http      = inject(HttpClient);
+  private authStore = inject(AuthStore);
 
-  getComments(articleSlug: string): Observable<GetCommentsResponse> {
-    return from(this.client['getComments']({ slug: articleSlug }));
+  private authHeaders(): HttpHeaders {
+    const token = this.authStore.token();
+    return token
+      ? new HttpHeaders({ Authorization: `Token ${token}` })
+      : new HttpHeaders();
   }
 
-  addComment(articleSlug: string, body: string): Observable<AddCommentResponse> {
-    return from(this.client['addComment']({ slug: articleSlug, body }));
+  getComments(articleSlug: string): Observable<CommentsResponse> {
+    return this.http.get<CommentsResponse>(
+      `${API_BASE}/articles/${articleSlug}/comments`,
+      { headers: this.authHeaders() }
+    );
   }
 
-  deleteComment(articleSlug: string, id: number): Observable<DeleteCommentResponse> {
-    return from(this.client['deleteComment']({ slug: articleSlug, id }));
+  addComment(articleSlug: string, body: string): Observable<CommentResponse> {
+    return this.http.post<CommentResponse>(
+      `${API_BASE}/articles/${articleSlug}/comments`,
+      { comment: { body } },
+      { headers: this.authHeaders() }
+    );
+  }
+
+  deleteComment(articleSlug: string, id: number): Observable<void> {
+    return this.http.delete<void>(
+      `${API_BASE}/articles/${articleSlug}/comments/${id}`,
+      { headers: this.authHeaders() }
+    );
   }
 }
