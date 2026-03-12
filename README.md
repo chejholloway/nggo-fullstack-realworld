@@ -1,6 +1,6 @@
 # nggo-fullstack-realworld
 
-A full-stack implementation of the [Real World App (Conduit)](https://realworld-docs.netlify.app/) spec — a Medium.com clone used to showcase real-world usage of a given tech stack.
+A full-stack implementation of the [Real World App (Well Done)](https://realworld-docs.netlify.app/) spec — a Medium.com clone used to showcase real-world usage of a given tech stack.
 
 This version is built to demonstrate modern full-stack development across the entire stack: a high-performance Go backend serving typed binary data via ConnectRPC, and an Angular 21 frontend using the latest signal-based APIs, all managed in a single monorepo.
 
@@ -34,6 +34,10 @@ This version is built to demonstrate modern full-stack development across the en
 **Nx + Sheriff** — 15 libs across 4 domains (articles, auth, profile, shared). Sheriff enforces that feature libs can't reach across domain boundaries at the ESLint level — violations are build errors, not suggestions.
 
 ---
+
+<div align="center">
+  <img src="frontend/apps/conduit/public/app-screen-shot.png" alt="App Screenshot" width="800" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
+</div>
 
 ## Project Structure
 

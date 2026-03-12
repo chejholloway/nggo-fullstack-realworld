@@ -1,7 +1,9 @@
 <nav class="navbar">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">conduit</a>
-    
+    <a class="navbar-brand" routerLink="/">
+      <img src="well-done-logo.png" alt="Well Done Logo" style="height: 40px; width: auto" />
+    </a>
+
     <ul class="nav">
       @if (isLoggedIn()) {
         <li class="nav-item">
@@ -13,14 +15,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/settings">
-            <i class="ion-gear-a"></i>&nbsp;Settings
-          </a>
+          <a class="nav-link" routerLink="/settings"> <i class="ion-gear-a"></i>&nbsp;Settings </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/profile/{{ user()?.username }}">
-            <img 
-              class="user-pic" 
+            <img
+              class="user-pic"
               [src]="user()?.image || 'https://api.realworld.io/images/smiley-cyrus.jpeg'"
               [alt]="user()?.username"
             />

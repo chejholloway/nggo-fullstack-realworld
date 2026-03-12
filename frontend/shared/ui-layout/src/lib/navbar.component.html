@@ -1,9 +1,20 @@
 <nav class="navbar">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">conduit</a>
+    <a class="navbar-brand" routerLink="/">
+      <img
+        src="well-done-logo.png"
+        alt="Well Done Logo"
+        style="height: 200px; width: auto; position: relative; left: -4rem"
+      />
+    </a>
     <ul class="nav">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a
+          class="nav-link"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           Home
         </a>
       </li>
@@ -25,14 +36,10 @@
         </li>
       } @else {
         <li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active">
-            Sign in
-          </a>
+          <a class="nav-link" routerLink="/login" routerLinkActive="active"> Sign in </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/register" routerLinkActive="active">
-            Sign up
-          </a>
+          <a class="nav-link" routerLink="/register" routerLinkActive="active"> Sign up </a>
         </li>
       }
     </ul>
