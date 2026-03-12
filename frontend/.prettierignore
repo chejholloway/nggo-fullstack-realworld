@@ -1,0 +1,31 @@
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Nx
+/.nx
+/coverage
+/.angular
+
+# Generated code
+/gen
+
+# Specific files
+package-lock.json
+bun.lock
+bun.lockb
+*.timestamp*

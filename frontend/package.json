@@ -3,10 +3,25 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "format": "prettier --write .",
     "lint": "oxlint . && eslint .",
-    "lint:fix": "oxlint --fix . && eslint --fix .",
     "lint:arch": "eslint .",
+    "lint:fix": "oxlint --fix . && eslint --fix . && prettier --write .",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "oxlint --fix",
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.html": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,json,md,mjs,js}": [
+      "prettier --write"
+    ]
   },
   "private": true,
   "dependencies": {
