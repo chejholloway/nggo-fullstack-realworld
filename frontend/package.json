@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "build": "nx build conduit",
+    "build:prod": "nx build conduit --configuration=production",
     "format": "prettier --write .",
     "lint": "oxlint . && eslint .",
     "lint:arch": "eslint .",
     "lint:fix": "oxlint --fix . && eslint --fix . && prettier --write .",
     "prepare": "husky",
+    "preview": "nx serve conduit --configuration=production",
     "typecheck": "tsc --noEmit -p tsconfig.base.json",
     "typecheck:watch": "tsc --noEmit -p tsconfig.base.json --watch",
     "validate": "bun run lint && bun run typecheck"

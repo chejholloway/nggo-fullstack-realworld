@@ -233,18 +233,4 @@ migrate `
   down
 ```
 
----
 
-## Status
-
-- [x] Server running on `:8080`
-- [x] All 4 ConnectRPC services registered
-- [x] JWT extraction middleware
-- [x] CORS configured for Angular dev server (`:4200`)
-- [x] PostgreSQL schema + migrations
-- [x] sqlc queries for all domains
-- [x] Store wired into server
-- [ ] Real handler implementations (currently stubs)
-- [ ] JWT generation on login/register
-- [ ] Password hashing (bcrypt)
-- [ ] Slug generation for articles

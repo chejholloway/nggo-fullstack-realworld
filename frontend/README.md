@@ -6,17 +6,17 @@ Angular 21 frontend for the [Real World App (Conduit)](https://realworld-docs.ne
 
 ## Stack
 
-| Concern | Tool |
-|---|---|
-| Framework | Angular 21 |
-| Monorepo | Nx |
-| Boundary enforcement | Sheriff (`@softarc/sheriff-core`) |
-| Styling | TailwindCSS with `@apply` semantic class names |
-| Package manager | Bun |
-| API client | ConnectRPC (`@connectrpc/connect-web`) |
-| Runtime validation | Zod |
-| Type utilities | type-fest |
-| Tests | Vitest |
+| Concern              | Tool                                           |
+| -------------------- | ---------------------------------------------- |
+| Framework            | Angular 21                                     |
+| Monorepo             | Nx                                             |
+| Boundary enforcement | Sheriff (`@softarc/sheriff-core`)              |
+| Styling              | TailwindCSS with `@apply` semantic class names |
+| Package manager      | Bun                                            |
+| API client           | ConnectRPC (`@connectrpc/connect-web`)         |
+| Runtime validation   | Zod                                            |
+| Type utilities       | type-fest                                      |
+| Tests                | Vitest                                         |
 
 ---
 
@@ -79,22 +79,22 @@ frontend/
 
 All libs are importable via `@conduit/*` — defined in `tsconfig.base.json`:
 
-| Alias | Points to |
-|---|---|
-| `@conduit/articles-feature-feed` | `articles/feature-feed/src/index.ts` |
-| `@conduit/articles-feature-article` | `articles/feature-article/src/index.ts` |
-| `@conduit/articles-feature-editor` | `articles/feature-editor/src/index.ts` |
+| Alias                                  | Points to                                  |
+| -------------------------------------- | ------------------------------------------ |
+| `@conduit/articles-feature-feed`       | `articles/feature-feed/src/index.ts`       |
+| `@conduit/articles-feature-article`    | `articles/feature-article/src/index.ts`    |
+| `@conduit/articles-feature-editor`     | `articles/feature-editor/src/index.ts`     |
 | `@conduit/articles-ui-article-preview` | `articles/ui-article-preview/src/index.ts` |
-| `@conduit/articles-data-access` | `articles/data-access/src/index.ts` |
-| `@conduit/auth-feature-login` | `auth/feature-login/src/index.ts` |
-| `@conduit/auth-feature-register` | `auth/feature-register/src/index.ts` |
-| `@conduit/auth-data-access` | `auth/data-access/src/index.ts` |
-| `@conduit/profile-feature-profile` | `profile/feature-profile/src/index.ts` |
-| `@conduit/profile-ui-avatar` | `profile/ui-avatar/src/index.ts` |
-| `@conduit/profile-data-access` | `profile/data-access/src/index.ts` |
-| `@conduit/shared-data-access` | `shared/data-access/src/index.ts` |
-| `@conduit/shared-ui-layout` | `shared/ui-layout/src/index.ts` |
-| `@conduit/shared-util-auth` | `shared/util-auth/src/index.ts` |
+| `@conduit/articles-data-access`        | `articles/data-access/src/index.ts`        |
+| `@conduit/auth-feature-login`          | `auth/feature-login/src/index.ts`          |
+| `@conduit/auth-feature-register`       | `auth/feature-register/src/index.ts`       |
+| `@conduit/auth-data-access`            | `auth/data-access/src/index.ts`            |
+| `@conduit/profile-feature-profile`     | `profile/feature-profile/src/index.ts`     |
+| `@conduit/profile-ui-avatar`           | `profile/ui-avatar/src/index.ts`           |
+| `@conduit/profile-data-access`         | `profile/data-access/src/index.ts`         |
+| `@conduit/shared-data-access`          | `shared/data-access/src/index.ts`          |
+| `@conduit/shared-ui-layout`            | `shared/ui-layout/src/index.ts`            |
+| `@conduit/shared-util-auth`            | `shared/util-auth/src/index.ts`            |
 
 ---
 
@@ -192,10 +192,18 @@ Tailwind utility classes are composed behind semantic class names using `@apply`
 
 ```css
 /* article-preview.component.css */
-.preview-card    { @apply border-b border-gray-200 py-6; }
-.author-name     { @apply text-green-500 font-medium hover:text-green-400; }
-.favorite-btn    { @apply border border-green-500 text-green-500 px-2 py-1 rounded; }
-.favorite-btn.active { @apply bg-green-500 text-white; }
+.preview-card {
+  @apply border-b border-gray-200 py-6;
+}
+.author-name {
+  @apply text-green-500 font-medium hover:text-green-400;
+}
+.favorite-btn {
+  @apply border border-green-500 text-green-500 px-2 py-1 rounded;
+}
+.favorite-btn.active {
+  @apply bg-green-500 text-white;
+}
 ```
 
 ```html
@@ -217,25 +225,3 @@ View the full dependency graph in the browser:
 ```powershell
 bun run nx graph
 ```
-
----
-
-## Status
-
-- [x] Nx workspace with 15 projects — 14 libs + 1 app
-- [x] All `@conduit/*` path aliases configured
-- [x] ConnectRPC transport wired up in `shared/data-access`
-- [x] Lazy-loaded routes for all 6 pages
-- [x] Auth interceptor attaching JWT tokens
-- [x] TailwindCSS configured
-- [x] Sheriff boundary config written
-- [x] Vitest configured for all libs
-- [ ] AuthStore implementation
-- [ ] ArticlesService connecting to backend
-- [ ] Article feed UI
-- [ ] Login and register forms
-- [ ] Article detail page
-- [ ] Article editor
-- [ ] Profile pages
-- [ ] Nav bar + footer
-- [ ] Comments
