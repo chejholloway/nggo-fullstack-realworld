@@ -3,6 +3,7 @@ import angular from 'angular-eslint';
 import tseslint from 'typescript-eslint';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import sheriff from '@softarc/eslint-plugin-sheriff';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   ...nx.configs['flat/base'],
@@ -118,4 +119,5 @@ export default tseslint.config(
       'jsx-a11y/no-autofocus': 'warn',
     },
   },
+  eslintConfigPrettier,
 );
